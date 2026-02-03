@@ -204,8 +204,8 @@ function createMoveIndicator(index, large=true) {
     const div = document.createElement("div");
     div.classList.add("moveIndicator");
     div.dataset.id = index;
-    if (large) div.innerHTML = `<i class="fa-solid fa-arrow-right fa-lg"></i>`;
-    else div.innerHTML = `<i class="fa-solid fa-arrow-right fa-sm"></i>`;
+    if (large) div.innerHTML = `<i class="fa-solid fa-caret-right fa-xl"></i>`;
+    else div.innerHTML = `<i class="fa-solid fa-caret-right"></i>`;
     return div;
 }
 

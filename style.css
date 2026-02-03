@@ -53,6 +53,7 @@ body {
 .moveIndicator i {
     display: none;
     position: relative;
+    top: -5px;
     transition: transform 0.2s ease;
 }
 
@@ -63,12 +64,12 @@ body {
 
 .moveIndicator i:hover {
     cursor: pointer;
-    transform: translateX(10px);
+    transform: scale(2);
 }
 
-.subtasks .moveIndicator i:hover {
+/* .subtasks .moveIndicator i:hover {
     transform: translateX(7px);
-}
+} */
 
 
 .todo-checkbox {
@@ -118,7 +119,7 @@ body {
 .subtasks {
     display: grid;
     grid-template-columns: 1.5em 1fr;
-    gap: 5px;
+    
     font-size: 0.9em;
 }
 
