@@ -5,18 +5,19 @@
     --td-horizontal-line: #88a2ba;
     --td-paper-color: #fff6d5;
     --td-vertical-margin: #e0615e;
-    --td-icon-idle: #7f8c8d;
+    --td-icon-idle: #999;
     --td-icon-active: #2c3e50;
     --td-green: #27ae60;
     --td-red: #c0392b;
     --td-white: #FEF9E7;
+    --td-button-size: 25px;
 }
 
 body {
     display: flex;
     justify-content: center;
     margin: 0;
-    background: #be7704 url("background.jpg") center /cover no-repeat fixed;
+    background: #be7704 url("paper-bg.png") center /cover no-repeat fixed;
     border-image-source: radial-gradient(transparent 20%, rgba(0,0,0,0.6));
     border-image-slice: 1 fill;
 }
@@ -42,6 +43,7 @@ body {
     display: grid;
     grid-template-columns: 1.5em 1fr;
     color: var(--td-text-color);
+    column-gap: 5px;
 }
 
 #taskContainer > .moveIndicator {
@@ -58,6 +60,7 @@ body {
     display: block;
 }
 
+
 .moveIndicator i:hover {
     cursor: pointer;
     transform: translateX(10px);
@@ -67,24 +70,30 @@ body {
     transform: translateX(7px);
 }
 
+
 .todo-checkbox {
     display: none;
 }
 
+.not-label {
+    flex-grow: 1;
+    display: flex;
+}
+
 .taskTextContainer, 
 .subtasks .taskText {
-    flex-grow: 1;
     min-width: 250px;
 }
 
 .taskTextContainer {
+    flex-grow: 1;
     display: flex;
-    gap: 0.4em;
-    align-items: center;
+    gap: 0.2em;
+    align-items: flex-start;
 }
 
 .progressText {
-    font-size: medium;
+    font-size: 0.8em;
     color: var(--td-icon-idle);
     text-shadow: none;
 }
@@ -95,23 +104,28 @@ body {
     text-decoration-color: var(--td-red);
 }
 
+/* .mainTask .taskText.completed {
+    text-decoration-thickness: 2px;
+} */
+
 .task {
-    padding: 5px;
     font-family: 'Delius', cursive;
+    font-size: 1.1rem;
+    margin-bottom: 1.5em;
 }
 
 
 .subtasks {
     display: grid;
-    grid-template-columns: 1em 1fr;
+    grid-template-columns: 1.5em 1fr;
     gap: 5px;
-    font-size: 0.95rem;
+    font-size: 0.9em;
 }
 
 .subtask {
     display: flex;
     gap: 5px;
-    align-items: center;
+    align-items: flex-start;
     border-bottom: 1px solid var(--td-horizontal-line);
     padding: 3px;
 }
@@ -127,9 +141,7 @@ body {
 }
 
 .subtasks .todo-label {
-    flex: 0 0 1.2em;
-    width: 1.2em;
-    height: 1.2em;
+    font-size: 0.8em;
 
 }
 
@@ -139,15 +151,12 @@ body {
 
 .todo-checkbox:checked + .todo-label::before {
     position: relative;
-    left: 18%;
-    font-size: 120%;
+    left: 0.25em;
+    font-size: 1.2em;
     content: "✔";
     color: var(--td-white);
 }
 
-.subtasks .todo-checkbox:checked + .todo-label::before {
-    font-size: 95%;
-}
 
 .disabled {
     cursor: not-allowed;
@@ -160,9 +169,8 @@ body {
 .mainTask {
     display: flex;
     gap: 5px;
-    align-items: center;
+    align-items: flex-start;
     padding: 5px;
-    font-size: 1.1rem;
     margin-bottom: 10px;
     text-shadow: 1px 1px 0px rgba(0,0,0,0.2); 
     border-bottom: 1px solid var(--td-horizontal-line);
@@ -199,16 +207,21 @@ button:hover i.fa-solid.fa-trash {
     color: var(--td-red);
 }
 
+.tools button {
+    width: var(--td-button-size);
+    height: var(--td-button-size);
+}
+
 .newSubtask {
     padding-left: 1em;
 }
 
-.mainTools, .subTools {
+.tools {
     visibility: hidden;
 }
 
-.mainTask:hover .mainTools, 
-.subtask:hover .subTools {
+.mainTask:hover .tools, 
+.subtask:hover .tools {
     visibility: visible;
 }
 
@@ -239,7 +252,7 @@ button.ultilities {
     color: var(--td-white);
 }
 
-#addNewTaskInput {
+#mainContainer input {
     flex-grow: 1;
     background: transparent;
     border: none;
@@ -247,14 +260,17 @@ button.ultilities {
     font-size: 1em;
     font-family: 'Delius', cursive;
     color: var(--td-text-color);
-    padding: 10px 5px 0;
     outline: none; 
     transition: border-bottom-color 0.2s ease;
 }
 
-
-#addNewTaskInput:focus {
+#mainContainer input:focus {
     border-bottom-color: var(--td-text-color);
+}
+
+#addNewTaskInput {
+    padding: 10px 5px 0;
+    outline: none; 
 }
 
 
@@ -291,7 +307,21 @@ button.ultilities {
 }
 
 @media only screen and (max-width: 450px) {
+
+    body {
+        --td-button-size: 36px;
+    }
+
     .taskTextContainer, .subtasks .taskText {
         min-width: 1px;
+    }
+
+    .not-label {
+        flex-wrap: wrap;
+    }
+
+    .tools {
+        visibility: visible;
+        flex-basis: 100%;
     }
 }

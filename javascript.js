@@ -1,6 +1,5 @@
 let todoM = JSON.parse(localStorage.getItem("todoM")) || [];
 
-
 displayTasks();
 addNewTaskButton();
 
@@ -16,18 +15,19 @@ function displayTasks() {
                     <div class="mainTask">
                         <input type="checkbox" class="todo-checkbox" id="main-input-${index}" ${item.checked ? "checked" : ""}>
                         <label class="todo-label" for="main-input-${index}"></label>
-                        <div class="taskTextContainer">
-                            <div class="taskText${item.checked ? " completed" : ""}">${item.text}</div>
-                            <div class="progressText">${item.subtasks.length > 0 ? ` (${item.completedsubtasks}/${item.subtasks.length})` : ""}</div>
-                            ${item.locked ? `<i class="fa-solid fa-lock fa-lg"></i>` : ""}
-                        </div>
-                        <div class="mainTools">
-                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
-                            <button class="lock"><i class="fa-solid fa-lock"></i></button>
-                            <button class="expand"><i class="fa-solid fa-plus"></i></button>
-                            <button class="move"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
-
+                        <div class="not-label">
+                            <div class="taskTextContainer">
+                                <div class="taskText${item.checked ? " completed" : ""}">${escapeHtml(item.text)}</div>
+                                ${item.locked ? `<div class="locked-icon"><i class="fa-solid fa-lock fa-lg"></i></div>` : ""}
+                                <div class="progressText">${item.subtasks.length > 0 ? ` (${item.completedsubtasks}/${item.subtasks.length})` : ""}</div>
+                            </div>
+                            <div class="tools">
+                                <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                                <button class="lock"><i class="fa-solid fa-lock"></i></button>
+                                <button class="expand"><i class="fa-solid fa-plus"></i></button>
+                                <button class="move"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                                <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div class="subtasks"></div>
@@ -144,13 +144,15 @@ function displayTasks() {
             const subtaskHTML =` 
                     <input type="checkbox" class="todo-checkbox" id="sub-input-${index}-${sindex}" ${sitem.checked ? "checked" : ""}>
                     <label class="todo-label" for="sub-input-${index}-${sindex}"></label>
-                    <div class="taskTextContainer">
-                        <div class="taskText${sitem.checked ? " completed" : ""}">${sitem.text}</div>
-                    </div>
-                    <div class="subTools">
-                        <button class="edit"><i class="fa-solid fa-pen"></i></button>
-                        <button class="move"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                    <div class="not-label">
+                        <div class="taskTextContainer">
+                            <div class="taskText${sitem.checked ? " completed" : ""}">${escapeHtml(sitem.text)}</div>
+                        </div>
+                        <div class="tools">
+                            <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="move"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
+                            <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>`;
             divsubtask.innerHTML = subtaskHTML;
 
@@ -192,6 +194,11 @@ function displayTasks() {
     container.appendChild( createMoveIndicator(todoM.length) );
 }
 
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+}
 
 function createMoveIndicator(index, large=true) {
     const div = document.createElement("div");
